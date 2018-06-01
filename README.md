@@ -7,60 +7,60 @@ Structure
 ------------
 ### Headers
 sgx.h
-struct sgx_epc_page {}; </br>
-enum sgx_alloc_flags {};
-struct sgx_va_page {};
-static inline unsigned int sgx_alloc_va_slot(){}
-static inline void sgx_free_va_slot(){}
-enum sgx_encl_page_flags {};
-struct sgx_encl_page {};
-struct sgx_tgid_ctx {};
-enum sgx_encl_flags {};
-struct sgx_encl {};
-struct sgx_epc_bank {};
+struct sgx_epc_page {};                                          </br>
+enum sgx_alloc_flags {};                                          </br>
+struct sgx_va_page {};                                          </br>
+static inline unsigned int sgx_alloc_va_slot(){}                                          </br>
+static inline void sgx_free_va_slot(){}                                          </br>
+enum sgx_encl_page_flags {};                                          </br>
+struct sgx_encl_page {};                                          </br>
+struct sgx_tgid_ctx {};                                          </br>
+enum sgx_encl_flags {};                                          </br>
+struct sgx_encl {};                                          </br>
+struct sgx_epc_bank {};                                          </br>
 
-extern struct workqueue_struct *sgx_add_page_wq;
-extern struct sgx_epc_bank sgx_epc_banks[];
-extern int sgx_nr_epc_banks;
-extern u64 sgx_encl_size_max_32;
-extern u64 sgx_encl_size_max_64;
-extern u64 sgx_xfrm_mask;
-extern u32 sgx_misc_reserved;
-extern u32 sgx_xsave_size_tbl[64];
-extern const struct vm_operations_struct sgx_vm_ops;
+extern struct workqueue_struct *sgx_add_page_wq;                                          </br>
+extern struct sgx_epc_bank sgx_epc_banks[];                                          </br>
+extern int sgx_nr_epc_banks;                                          </br>
+extern u64 sgx_encl_size_max_32;                                          </br>
+extern u64 sgx_encl_size_max_64;                                          </br>
+extern u64 sgx_xfrm_mask;                                          </br>
+extern u32 sgx_misc_reserved;                                          </br>
+extern u32 sgx_xsave_size_tbl[64];                                          </br>
+extern const struct vm_operations_struct sgx_vm_ops;                                          </br>
 
-int sgx_encl_find();
-void sgx_tgid_ctx_release();
-int sgx_encl_create();
-int sgx_encl_add_page();
-int sgx_encl_init();
-void sgx_encl_release();
+int sgx_encl_find();                                          </br>
+void sgx_tgid_ctx_release();                                          </br>
+int sgx_encl_create();                                          </br>
+int sgx_encl_add_page();                                          </br>
+int sgx_encl_init();                                          </br>
+void sgx_encl_release();                                          </br>
 
-long sgx_ioctl();
+long sgx_ioctl();                                          </br>
 
-/* Utility functions */
-int sgx_test_and_clear_young();
-struct page *sgx_get_backing();
-void sgx_put_backing();
-void sgx_insert_pte();
-int sgx_eremove();
-void sgx_zap_tcs_ptes();
-void sgx_invalidate();
-void sgx_flush_cpus();
-enum sgx_fault_flags {};
-struct sgx_encl_page *sgx_fault_page();
-extern struct mutex sgx_tgid_ctx_mutex;
-extern struct list_head sgx_tgid_ctx_list;
-extern atomic_t sgx_va_pages_cnt;
-int sgx_add_epc_bank();
-int sgx_page_cache_init();
-void sgx_page_cache_teardown();
-struct sgx_epc_page *sgx_alloc_page();
-void sgx_free_page();
-void *sgx_get_page();
-void sgx_put_page();
-void sgx_eblock();
-void sgx_etrack();
+/* Utility functions */                                          </br>
+int sgx_test_and_clear_young();                                          </br>
+struct page *sgx_get_backing();                                          </br>
+void sgx_put_backing();                                          </br>
+void sgx_insert_pte();                                          </br>
+int sgx_eremove();                                          </br>
+void sgx_zap_tcs_ptes();                                          </br>
+void sgx_invalidate();                                          </br>
+void sgx_flush_cpus();                                          </br>
+enum sgx_fault_flags {};                                          </br>
+struct sgx_encl_page *sgx_fault_page();                                          </br>
+extern struct mutex sgx_tgid_ctx_mutex;                                          </br>
+extern struct list_head sgx_tgid_ctx_list;                                          </br>
+extern atomic_t sgx_va_pages_cnt;                                          </br>
+int sgx_add_epc_bank();                                          </br>
+int sgx_page_cache_init();                                          </br>
+void sgx_page_cache_teardown();                                          </br>
+struct sgx_epc_page *sgx_alloc_page();                                          </br>
+void sgx_free_page();                                          </br>
+void *sgx_get_page();                                          </br>
+void sgx_put_page();                                          </br>
+void sgx_eblock();                                          </br>
+void sgx_etrack();                                          </br>
 
 
 
