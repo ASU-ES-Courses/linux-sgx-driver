@@ -551,6 +551,17 @@ void sgx_free_page(struct sgx_epc_page *entry, struct sgx_encl *encl)
 	spin_unlock(&sgx_free_list_lock);
 }
 
+/*
+Finally, there is the problem of enabling kmap_atomic() on PFN-specified pages. 
+kmap_atomic() maps a page into the kernel's address space; it is only really 
+needed on 32-bit systems where there is not room to map all of main memory into 
+that space. On 64-bit systems it is essentially a no-op, turning a page structure 
+into its associated kernel virtual address.
+
+ELIXIR source '/include/linux/highmem.h':
+
+	#define kmap_atomic_pfn(pfn)	kmap_atomic(pfn_to_page(pfn))
+*/
 void *sgx_get_page(struct sgx_epc_page *entry)
 {
 #ifdef CONFIG_X86_32
@@ -563,6 +574,10 @@ void *sgx_get_page(struct sgx_epc_page *entry)
 #endif
 }
 
+/*
+/* Unmap that page. */
+	kunmap_atomic(vaddr);
+*/
 void sgx_put_page(void *epc_page_vaddr)
 {
 #ifdef CONFIG_X86_32
@@ -570,3 +585,12 @@ void sgx_put_page(void *epc_page_vaddr)
 #else
 #endif
 }
+
+/*
+SUMMARY:
+	'kmap_atomic' maps a page, has return value
+	'kunmap_atomic' unmaps a page using return value from 'kmap_atomic' as arg
+*/
+
+
+
