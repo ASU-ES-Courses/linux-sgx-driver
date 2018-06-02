@@ -139,7 +139,7 @@ type
 member
 
     the name of the list_head within the struct. 
- _________
+ ________________________________________________________________________
  
 list_move_tail — delete from one list and add as another's tail 
 void list_move_tail (struct list_head * list,struct list_head * head);
@@ -157,6 +157,10 @@ struct list_head * head
  *      head → some element → ... → lastelement → new element
  
  In this case, the new element is 'list_head * list'
+ 
+ ________________________________________________________________________
+ 
+  * kref_get_unless_zero - Increment refcount for object unless it is zero.
 
 */
 
