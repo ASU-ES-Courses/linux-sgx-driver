@@ -126,6 +126,40 @@ int sgx_test_and_clear_young(struct sgx_encl_page *page, struct sgx_encl *encl)
 				   sgx_test_and_clear_young_cb, vma->vm_mm);
 }
 
+
+/*
+list_first_entry(ptr,type,member);
+--
+ptr
+
+    the list head to take the element from. 
+type
+
+    the type of the struct this is embedded in. 
+member
+
+    the name of the list_head within the struct. 
+ _________
+ 
+list_move_tail — delete from one list and add as another's tail 
+void list_move_tail (struct list_head * list,struct list_head * head);
+--
+struct list_head * list
+
+    the entry to move 
+struct list_head * head
+
+    the head that will follow our entry 
+ --
+ * The list changes from:
+ *      head → some element → ... → lastelement
+ * to
+ *      head → some element → ... → lastelement → new element
+ 
+ In this case, the new element is 'list_head * list'
+
+*/
+
 static struct sgx_tgid_ctx *sgx_isolate_tgid_ctx(unsigned long nr_to_scan)
 {
 	struct sgx_tgid_ctx *ctx = NULL;
