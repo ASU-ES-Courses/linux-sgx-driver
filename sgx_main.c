@@ -253,6 +253,16 @@ static int sgx_dev_init(struct device *parent)
 	if (ret)
 		goto out_iounmap;
 
+	/*
+	Creates a queue, but not an kernel threads with the given name. 
+	
+	"serves as a context for the submission of tasks"
+	
+	"The name parameter names the queue, but, unlike in the older 
+	implementation, it does not create threads using that name. The 
+	flags parameter selects among a number of relatively complex 
+	options on how work submitted to the queue will be executed
+	*/
 	sgx_add_page_wq = alloc_workqueue("intel_sgx-add-page-wq",
 					  WQ_UNBOUND | WQ_FREEZABLE, 1);
 	if (!sgx_add_page_wq) {
