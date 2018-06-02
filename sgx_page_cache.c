@@ -575,7 +575,7 @@ void *sgx_get_page(struct sgx_epc_page *entry)
 }
 
 /*
-/* Unmap that page. */
+	// Unmap that page.
 	kunmap_atomic(vaddr);
 */
 void sgx_put_page(void *epc_page_vaddr)
