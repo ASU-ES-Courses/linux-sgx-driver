@@ -260,4 +260,7 @@ void sgx_put_page(void *epc_page_vaddr);
 void sgx_eblock(struct sgx_encl *encl, struct sgx_epc_page *epc_page);
 void sgx_etrack(struct sgx_encl *encl);
 
+//************ CHANGES MADE HERE ******************//
+void print_encl_stats(struct sgx_encl *encl);
+
 #endif /* __ARCH_X86_INTEL_SGX_H__ */
