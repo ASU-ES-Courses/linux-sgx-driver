@@ -60,6 +60,8 @@
 
 //*************CHANGES MADE HERE ****************//
 //#include "debug.h"
+#include <linux/module.h>
+#include <linux/kernel.h>
 
 #include "sgx.h"
 #include <linux/freezer.h>
