@@ -185,6 +185,10 @@ static int sgx_eldu(struct sgx_encl *encl,
 	pginfo.pcmd = (unsigned long)kmap_atomic(pcmd) + pcmd_offset;
 	pginfo.linaddr = is_secs ? 0 : encl_page->addr;
 	pginfo.secs = (unsigned long)secs_ptr;
+	
+	//******** CHANGES MADE HERE **********//
+	encl->epc_total_paged++;
+	encl->epc_total_loaded++;
 
 	ret = __eldu((unsigned long)&pginfo,
 		     (unsigned long)epc_ptr,
