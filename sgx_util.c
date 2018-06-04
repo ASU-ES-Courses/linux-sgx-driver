@@ -80,9 +80,6 @@ struct page *sgx_get_backing(struct sgx_encl *encl,
 	struct address_space *mapping;
 	gfp_t gfpmask;
 	pgoff_t index;
-	
-	//**** CHANGES MADE HERE *******//
-	pr_info("%s: Is anything working???!!!!\n", __func__);
 
 	if (pcmd)
 		inode = encl->pcmd->f_path.dentry->d_inode;
@@ -101,10 +98,7 @@ struct page *sgx_get_backing(struct sgx_encl *encl,
 }
 
 void sgx_put_backing(struct page *backing_page, bool write)
-{
-	//**** CHANGES MADE HERE *******//
-	pr_info("%s: Is anything working???!!!!\n", __func__);
-	
+{	
 	if (write)
 		set_page_dirty(backing_page);
 
