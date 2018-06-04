@@ -58,6 +58,9 @@
  * Sean Christopherson <sean.j.christopherson@intel.com>
  */
 
+//*************CHANGES MADE HERE ****************//
+#include "debug.h"
+
 #include "sgx.h"
 #include <linux/freezer.h>
 #include <linux/highmem.h>
@@ -308,7 +311,7 @@ static int __sgx_ewb(struct sgx_encl *encl,
 	//****** CHANGES MADE HERE ********//
 	encl->epc_total_paged++;
 	encl->epc_total_evicted++;
-	
+	print_encl_stats(encl);
 	
 	ret = __ewb(&pginfo, epc,
 		    (void *)((unsigned long)va + encl_page->va_offset));
