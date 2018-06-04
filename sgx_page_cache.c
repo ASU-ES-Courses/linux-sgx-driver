@@ -304,6 +304,11 @@ static int __sgx_ewb(struct sgx_encl *encl,
 	pginfo.pcmd = (unsigned long)kmap_atomic(pcmd) + pcmd_offset;
 	pginfo.linaddr = 0;
 	pginfo.secs = 0;
+	
+	//****** CHANGES MADE HERE ********//
+	encl->epc_total_paged++;
+	encl->epc_total_evicted++;
+	
 	ret = __ewb(&pginfo, epc,
 		    (void *)((unsigned long)va + encl_page->va_offset));
 	kunmap_atomic((void *)(unsigned long)(pginfo.pcmd - pcmd_offset));
