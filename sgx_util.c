@@ -383,6 +383,8 @@ void sgx_etrack(struct sgx_encl *encl)
 	}
 }
 
+
+//*****************CHANGES MADE HERE ********************//
 void print_encl_stats(struct sgx_encl *encl) {
 
   printk("\n\n\n******************** Enclave # %u ********************\nTotal Paged: %u \nTotal Loaded: %u \nTotal Evicted: %u \n*****************************************************\n\n\n", 
