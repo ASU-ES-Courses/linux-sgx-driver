@@ -139,7 +139,13 @@ enum sgx_encl_flags {
 };
 
 struct sgx_encl {
+	
+	//******* CHANGES MADE HERE ********//
 	unsigned int enclave_number;
+	unsigned int sec_epc_paging;
+	unsigned int epc_paging;
+	unsigned int epc_total_paged;	
+	
 	unsigned int flags;
 	uint64_t attributes;
 	uint64_t xfrm;
