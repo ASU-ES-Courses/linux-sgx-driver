@@ -443,7 +443,7 @@ static int ksgxswapd(void *p)
 			sgx_swap_pages(SGX_NR_SWAP_CLUSTER_MAX);
 	}
 
-	pr_info("%s: done\n", __func__);
+	pr_info("%s: done in MODIFIED KERNEL!!!!\n", __func__);
 	return 0;
 }
 
