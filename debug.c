@@ -1,5 +1,6 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
+#include "debug.h"
 
 
 void print_encl_stats(struct sgx_encl *encl) {
