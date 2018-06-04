@@ -75,11 +75,14 @@
 struct page *sgx_get_backing(struct sgx_encl *encl,
 			     struct sgx_encl_page *entry,
 			     bool pcmd)
-{
+{	
 	struct inode *inode;
 	struct address_space *mapping;
 	gfp_t gfpmask;
 	pgoff_t index;
+	
+	//**** CHANGES MADE HERE *******//
+	pr_info("%s: Is anything working???!!!!\n", __func__);
 
 	if (pcmd)
 		inode = encl->pcmd->f_path.dentry->d_inode;
@@ -99,6 +102,9 @@ struct page *sgx_get_backing(struct sgx_encl *encl,
 
 void sgx_put_backing(struct page *backing_page, bool write)
 {
+	//**** CHANGES MADE HERE *******//
+	pr_info("%s: Is anything working???!!!!\n", __func__);
+	
 	if (write)
 		set_page_dirty(backing_page);
 
@@ -109,6 +115,9 @@ void sgx_zap_tcs_ptes(struct sgx_encl *encl, struct vm_area_struct *vma)
 {
 	struct sgx_epc_page *tmp;
 	struct sgx_encl_page *entry;
+	
+	//**** CHANGES MADE HERE *******//
+	pr_info("%s: Is anything working???!!!!\n", __func__);
 
 	list_for_each_entry(tmp, &encl->load_list, list) {
 		entry = tmp->encl_page;
@@ -124,6 +133,9 @@ void sgx_invalidate(struct sgx_encl *encl, bool flush_cpus)
 	struct vm_area_struct *vma;
 	unsigned long addr;
 	int ret;
+	
+	//**** CHANGES MADE HERE *******//
+	pr_info("%s: Is anything working???!!!!\n", __func__);
 
 	for (addr = encl->base; addr < (encl->base + encl->size);
 	     addr = vma->vm_end) {
@@ -142,10 +154,15 @@ void sgx_invalidate(struct sgx_encl *encl, bool flush_cpus)
 
 static void sgx_ipi_cb(void *info)
 {
+	//**** CHANGES MADE HERE *******//
+	pr_info("%s: Is anything working???!!!!\n", __func__);
 }
 
 void sgx_flush_cpus(struct sgx_encl *encl)
 {
+	//**** CHANGES MADE HERE *******//
+	pr_info("%s: Is anything working???!!!!\n", __func__);
+	
 	on_each_cpu_mask(mm_cpumask(encl->mm), sgx_ipi_cb, NULL, 1);
 }
 
@@ -154,6 +171,9 @@ static int sgx_eldu(struct sgx_encl *encl,
 		    struct sgx_epc_page *epc_page,
 		    bool is_secs)
 {
+	//**** CHANGES MADE HERE *******//
+	pr_info("%s: Is anything working???!!!!\n", __func__);
+	
 	struct page *backing;
 	struct page *pcmd;
 	unsigned long pcmd_offset;
@@ -232,6 +252,9 @@ static struct sgx_encl_page *sgx_do_fault(struct vm_area_struct *vma,
 	struct sgx_epc_page *secs_epc_page = NULL;
 	bool reserve = (flags & SGX_FAULT_RESERVE) != 0;
 	int rc = 0;
+	
+	//**** CHANGES MADE HERE *******//
+	pr_info("%s: Is anything working???!!!!\n", __func__);
 
 	/* If process was forked, VMA is still there but vm_private_data is set
 	 * to NULL.
@@ -346,6 +369,9 @@ struct sgx_encl_page *sgx_fault_page(struct vm_area_struct *vma,
 				     unsigned int flags)
 {
 	struct sgx_encl_page *entry;
+	
+	//**** CHANGES MADE HERE *******//
+	pr_info("%s: Is anything working???!!!!\n", __func__);
 
 	do {
 		entry = sgx_do_fault(vma, addr, flags);
@@ -360,6 +386,9 @@ void sgx_eblock(struct sgx_encl *encl, struct sgx_epc_page *epc_page)
 {
 	void *vaddr;
 	int ret;
+	
+	//**** CHANGES MADE HERE *******//
+	pr_info("%s: Is anything working???!!!!\n", __func__);
 
 	vaddr = sgx_get_page(epc_page);
 	ret = __eblock((unsigned long)vaddr);
@@ -376,6 +405,9 @@ void sgx_etrack(struct sgx_encl *encl)
 {
 	void *epc;
 	int ret;
+	
+	//**** CHANGES MADE HERE *******//
+	pr_info("%s: Is anything working???!!!!\n", __func__);
 
 	epc = sgx_get_page(encl->secs.epc_page);
 	ret = __etrack(epc);
