@@ -308,11 +308,6 @@ static int __sgx_ewb(struct sgx_encl *encl,
 	pginfo.linaddr = 0;
 	pginfo.secs = 0;
 	
-	//****** CHANGES MADE HERE ********//
-	encl->epc_total_paged++;
-	encl->epc_total_evicted++;
-	print_encl_stats(encl);
-	
 	ret = __ewb(&pginfo, epc,
 		    (void *)((unsigned long)va + encl_page->va_offset));
 	kunmap_atomic((void *)(unsigned long)(pginfo.pcmd - pcmd_offset));
@@ -383,6 +378,11 @@ static void sgx_write_pages(struct sgx_encl *encl, struct list_head *src)
 
 	/* ETRACK */
 	sgx_etrack(encl);
+	
+	//****** CHANGES MADE HERE ********//
+	encl->epc_total_paged++;
+	encl->epc_total_evicted++;
+	print_encl_stats(encl);
 
 	/* EWB */
 	while (!list_empty(src)) {
