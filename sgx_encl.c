@@ -74,6 +74,9 @@
 #include <linux/hashtable.h>
 #include <linux/shmem_fs.h>
 
+//********* CHANGES MADE HERE ************//
+static unsigned int sgx_enclave_number;
+
 struct sgx_add_page_req {
 	struct sgx_encl *encl;
 	struct sgx_encl_page *encl_page;
@@ -589,6 +592,10 @@ int sgx_encl_create(struct sgx_secs *secs)
 		ret = PTR_ERR(secs_epc);
 		goto out;
 	}
+	
+	//********* CHANGES MADE HERE ************//
+	sgx_enclave_number++;
+	encl->enclave_number = sgx_enclave_number;
 
 	encl->secs.epc_page = secs_epc;
 
