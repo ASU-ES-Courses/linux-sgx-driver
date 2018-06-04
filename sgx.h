@@ -139,6 +139,7 @@ enum sgx_encl_flags {
 };
 
 struct sgx_encl {
+	unsigned int enclave_number;
 	unsigned int flags;
 	uint64_t attributes;
 	uint64_t xfrm;
