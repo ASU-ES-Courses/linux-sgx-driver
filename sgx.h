@@ -144,6 +144,8 @@ struct sgx_encl {
 	unsigned int enclave_number;
 	unsigned int sec_epc_paging;
 	unsigned int epc_paging;
+	unsigned int epc_total_evicted;
+	unsigned int epc_total_loaded;
 	unsigned int epc_total_paged;	
 	
 	unsigned int flags;
