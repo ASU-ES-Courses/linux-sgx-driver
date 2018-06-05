@@ -80,6 +80,13 @@
 
 //**** CHANGES MADE HERE ****//
 #define DEBUG_PRINT 0
+#define DEBUG_PRINT_SGX_ENCL 0
+#define DEBUG_PRINT_SGX_IOCTL 0
+#define DEBUG_PRINT_SGX_MAIN 0
+#define DEBUG_PRINT_SGX_PAGE_CACHE 0
+#define DEBUG_PRINT_SGX_USER 0
+#define DEBUG_PRINT_SGX_UTIL 0
+#define DEBUG_PRINT_SGX_VMA 0
 
 struct sgx_epc_page {
 	resource_size_t	pa;
