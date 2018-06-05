@@ -391,10 +391,18 @@ void sgx_etrack(struct sgx_encl *encl)
 //*****************CHANGES MADE HERE ********************//
 void print_encl_stats(struct sgx_encl *encl) {
 
+/*  This is long version
   printk("\n******************** Enclave # %u ********************\nTotal Paged: %u \nTotal Loaded: %u \nTotal Evicted: %u \n*****************************************************\n", 
 	 encl->enclave_number,
 	 encl->epc_total_paged,
 	 encl->epc_total_loaded,
 	 encl->epc_total_evicted);
-         
+*/
+	
+/* short concise print version */
+  printk("\n** Enclave # %u ** Total Paged: %u ; Total Loaded: %u ; Total Evicted: %u ; \n", 
+	 encl->enclave_number,
+	 encl->epc_total_paged,
+	 encl->epc_total_loaded,
+	 encl->epc_total_evicted);
 }
