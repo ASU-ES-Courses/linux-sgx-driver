@@ -164,10 +164,7 @@ static int sgx_eldu(struct sgx_encl *encl,
 		    struct sgx_encl_page *encl_page,
 		    struct sgx_epc_page *epc_page,
 		    bool is_secs)
-{
-	//**** CHANGES MADE HERE *******//
-	pr_info("%s: Is anything working???!!!!\n", __func__);
-	
+{	
 	struct page *backing;
 	struct page *pcmd;
 	unsigned long pcmd_offset;
