@@ -910,6 +910,9 @@ int sgx_encl_init(struct sgx_encl *encl, struct sgx_sigstruct *sigstruct,
 	int ret;
 	int i;
 	int j;
+	
+	//*** CHANGES MADE HERE ***//
+	encl->eadd_count = eadd_count;
 
 	flush_work(&encl->add_page_work);
 
