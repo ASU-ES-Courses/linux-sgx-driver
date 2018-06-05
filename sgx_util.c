@@ -398,7 +398,7 @@ void print_encl_stats(struct sgx_encl *encl) {
 	 encl->epc_total_loaded,
 	 encl->epc_total_evicted,
 	 encl->eadd_count,
-	 encl->mm.total_vm);
+	 encl->mm->total_vm);
 
 	
 /* short concise print version 
