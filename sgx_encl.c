@@ -107,6 +107,10 @@ int sgx_encl_find(struct mm_struct *mm, unsigned long addr,
 {
 	struct vm_area_struct *result;
 	struct sgx_encl *encl;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	result = find_vma(mm, addr);
 	if (!result || result->vm_ops != &sgx_vm_ops || addr < result->vm_start)
@@ -121,6 +125,10 @@ int sgx_encl_find(struct mm_struct *mm, unsigned long addr,
 static struct sgx_tgid_ctx *sgx_find_tgid_ctx(struct pid *tgid)
 {
 	struct sgx_tgid_ctx *ctx;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	list_for_each_entry(ctx, &sgx_tgid_ctx_list, list)
 		if (pid_nr(ctx->tgid) == pid_nr(tgid))
@@ -133,6 +141,10 @@ static int sgx_add_to_tgid_ctx(struct sgx_encl *encl)
 {
 	struct sgx_tgid_ctx *ctx;
 	struct pid *tgid = get_pid(task_tgid(current));
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	mutex_lock(&sgx_tgid_ctx_mutex);
 
@@ -169,6 +181,10 @@ static int sgx_add_to_tgid_ctx(struct sgx_encl *encl)
 
 void sgx_tgid_ctx_release(struct kref *ref)
 {
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
+	
 	struct sgx_tgid_ctx *pe =
 		container_of(ref, struct sgx_tgid_ctx, refcount);
 	mutex_lock(&sgx_tgid_ctx_mutex);
@@ -186,6 +202,10 @@ static int sgx_measure(struct sgx_epc_page *secs_page,
 	void *epc;
 	int ret = 0;
 	int i, j;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	for (i = 0, j = 1; i < 0x1000 && !ret; i += 0x100, j <<= 1) {
 		if (!(j & mrmask))
@@ -215,6 +235,8 @@ static int sgx_eadd(struct sgx_epc_page *secs_page,
 	
 	//*** CHANGES MADE HERE ****//
 	eadd_count++;
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	pginfo.srcpge = (unsigned long)kmap_atomic(backing);
 	pginfo.secs = (unsigned long)sgx_get_page(secs_page);
@@ -239,6 +261,10 @@ static bool sgx_process_add_page_req(struct sgx_add_page_req *req,
 	struct sgx_encl *encl = req->encl;
 	struct vm_area_struct *vma;
 	int ret;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	if (encl->flags & (SGX_ENCL_SUSPEND | SGX_ENCL_DEAD))
 		return false;
@@ -297,6 +323,10 @@ static void sgx_add_page_worker(struct work_struct *work)
 	struct sgx_epc_page *epc_page;
 	bool skip_rest = false;
 	bool is_empty = false;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	encl = container_of(work, struct sgx_encl, add_page_work);
 
@@ -343,6 +373,10 @@ static u32 sgx_calc_ssaframesize(u32 miscselect, u64 xfrm)
 	u32 size_max = PAGE_SIZE;
 	u32 size;
 	int i;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	for (i = 2; i < 64; i++) {
 		if (!((1 << i) & xfrm))
@@ -363,6 +397,10 @@ static int sgx_validate_secs(const struct sgx_secs *secs,
 			     unsigned long ssaframesize)
 {
 	int i;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	if (secs->size < (2 * PAGE_SIZE) ||
 	    (secs->size & (secs->size - 1)) != 0)
@@ -426,6 +464,10 @@ static int sgx_validate_secs(const struct sgx_secs *secs,
 static void sgx_mmu_notifier_release(struct mmu_notifier *mn,
 				     struct mm_struct *mm)
 {
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
+	
 	struct sgx_encl *encl =
 		container_of(mn, struct sgx_encl, mmu_notifier);
 
@@ -446,6 +488,10 @@ static int sgx_init_page(struct sgx_encl *encl, struct sgx_encl_page *entry,
 	unsigned int va_offset = PAGE_SIZE;
 	void *vaddr;
 	int ret = 0;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	list_for_each_entry(va_page, &encl->va_pages, list) {
 		va_offset = sgx_alloc_va_slot(va_page);
@@ -519,6 +565,10 @@ static struct sgx_encl *sgx_encl_alloc(struct sgx_secs *secs)
 	struct sgx_encl *encl;
 	struct file *backing;
 	struct file *pcmd;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	ssaframesize = sgx_calc_ssaframesize(secs->miscselect, secs->xfrm);
 	if (sgx_validate_secs(secs, ssaframesize))
@@ -586,6 +636,10 @@ int sgx_encl_create(struct sgx_secs *secs)
 	struct vm_area_struct *vma;
 	void *secs_vaddr;
 	long ret;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	encl = sgx_encl_alloc(secs);
 	if (IS_ERR(encl))
@@ -676,6 +730,10 @@ static int sgx_validate_secinfo(struct sgx_secinfo *secinfo)
 	u64 perm = secinfo->flags & SGX_SECINFO_PERMISSION_MASK;
 	u64 page_type = secinfo->flags & SGX_SECINFO_PAGE_TYPE_MASK;
 	int i;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	if ((secinfo->flags & SGX_SECINFO_RESERVED_MASK) ||
 	    ((perm & SGX_SECINFO_W) && !(perm & SGX_SECINFO_R)) ||
@@ -692,6 +750,11 @@ static int sgx_validate_secinfo(struct sgx_secinfo *secinfo)
 
 static bool sgx_validate_offset(struct sgx_encl *encl, unsigned long offset)
 {
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
+	
 	if (offset & (PAGE_SIZE - 1))
 		return false;
 
@@ -704,6 +767,10 @@ static bool sgx_validate_offset(struct sgx_encl *encl, unsigned long offset)
 static int sgx_validate_tcs(struct sgx_encl *encl, struct sgx_tcs *tcs)
 {
 	int i;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	if (tcs->flags & SGX_TCS_RESERVED_MASK) {
 		sgx_dbg(encl, "%s: invalid TCS flags = 0x%lx\n",
@@ -767,6 +834,10 @@ static int __sgx_encl_add_page(struct sgx_encl *encl,
 	int ret;
 	int empty;
 	void *backing_ptr;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	if (sgx_validate_secinfo(secinfo))
 		return -EINVAL;
@@ -862,6 +933,10 @@ int sgx_encl_add_page(struct sgx_encl *encl, unsigned long addr, void *data,
 {
 	struct sgx_encl_page *page;
 	int ret;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	page = kzalloc(sizeof(*page), GFP_KERNEL);
 	if (!page)
@@ -881,6 +956,10 @@ static int sgx_einit(struct sgx_encl *encl, struct sgx_sigstruct *sigstruct,
 	struct sgx_epc_page *secs_epc = encl->secs.epc_page;
 	void *secs_va;
 	int ret;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	secs_va = sgx_get_page(secs_epc);
 	ret = __einit(sigstruct, token, secs_va);
@@ -913,6 +992,8 @@ int sgx_encl_init(struct sgx_encl *encl, struct sgx_sigstruct *sigstruct,
 	
 	//*** CHANGES MADE HERE ***//
 	encl->eadd_count = eadd_count;
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	flush_work(&encl->add_page_work);
 
@@ -962,6 +1043,10 @@ void sgx_encl_release(struct kref *ref)
 	struct sgx_encl *encl = container_of(ref, struct sgx_encl, refcount);
 	struct radix_tree_iter iter;
 	void **slot;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 	
 	print_encl_stats(encl);
 
