@@ -70,8 +70,8 @@
 #include <linux/kthread.h>
 #include <linux/platform_device.h>
 
-#define DRV_DESCRIPTION "Intel SGX Driver"
-#define DRV_VERSION "0.10"
+#define DRV_DESCRIPTION "Eugene's Modified Intel SGX Driver"
+#define DRV_VERSION "1.10"
 
 MODULE_DESCRIPTION(DRV_DESCRIPTION);
 MODULE_AUTHOR("Jarkko Sakkinen <jarkko.sakkinen@linux.intel.com>");
