@@ -384,7 +384,6 @@ static void sgx_write_pages(struct sgx_encl *encl, struct list_head *src)
 	//****** CHANGES MADE HERE ********//
 	encl->epc_total_paged++;
 	encl->epc_total_evicted++;
-	pr_info("%s: Is anything working???!!!!\n", __func__);
 	print_encl_stats(encl);
 
 	/* EWB */
