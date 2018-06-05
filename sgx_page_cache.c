@@ -651,10 +651,6 @@ void sgx_free_page(struct sgx_epc_page *entry, struct sgx_encl *encl)
 {
 	void *epc;
 	int ret;
-	
-	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
 
 	epc = sgx_get_page(entry);
 	ret = __eremove(epc);
