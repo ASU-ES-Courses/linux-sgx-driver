@@ -146,7 +146,8 @@ struct sgx_encl {
 	unsigned int epc_paging;
 	unsigned int epc_total_evicted;
 	unsigned int epc_total_loaded;
-	unsigned int epc_total_paged;	
+	unsigned int epc_total_paged;
+	unsigned int eadd_count;
 	
 	unsigned int flags;
 	uint64_t attributes;
