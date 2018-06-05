@@ -96,6 +96,10 @@ static int sgx_test_and_clear_young_cb(pte_t *ptep, pgtable_t token,
 {
 	pte_t pte;
 	int ret;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	ret = pte_young(*ptep);
 	if (ret) {
@@ -119,6 +123,10 @@ int sgx_test_and_clear_young(struct sgx_encl_page *page, struct sgx_encl *encl)
 {
 	struct vm_area_struct *vma;
 	int ret;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	ret = sgx_encl_find(encl->mm, page->addr, &vma);
 	if (ret)
@@ -173,6 +181,10 @@ static struct sgx_tgid_ctx *sgx_isolate_tgid_ctx(unsigned long nr_to_scan)
 {
 	struct sgx_tgid_ctx *ctx = NULL;
 	int i;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	mutex_lock(&sgx_tgid_ctx_mutex);
 
@@ -210,6 +222,10 @@ static struct sgx_encl *sgx_isolate_encl(struct sgx_tgid_ctx *ctx,
 {
 	struct sgx_encl *encl = NULL;
 	int i;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	mutex_lock(&sgx_tgid_ctx_mutex);
 
@@ -247,6 +263,10 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 {
 	struct sgx_epc_page *entry;
 	int i;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	mutex_lock(&encl->lock);
 
@@ -283,6 +303,10 @@ static int __sgx_ewb(struct sgx_encl *encl,
 	void *epc;
 	void *va;
 	int ret;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	pcmd_offset = ((encl_page->addr >> PAGE_SHIFT) & 31) * 128;
 
@@ -327,6 +351,11 @@ out:
 static bool sgx_ewb(struct sgx_encl *encl,
 		    struct sgx_encl_page *entry)
 {
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
+	
 	int ret = __sgx_ewb(encl, entry);
 
 	if (ret == SGX_NOT_TRACKED) {
@@ -349,6 +378,10 @@ static bool sgx_ewb(struct sgx_encl *encl,
 static void sgx_evict_page(struct sgx_encl_page *entry,
 			   struct sgx_encl *encl)
 {
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
+	
 	sgx_ewb(encl, entry);
 	sgx_free_page(entry->epc_page, encl);
 	entry->epc_page = NULL;
@@ -361,6 +394,10 @@ static void sgx_write_pages(struct sgx_encl *encl, struct list_head *src)
 	struct sgx_epc_page *tmp;
 	struct vm_area_struct *vma;
 	int ret;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	if (list_empty(src))
 		return;
@@ -404,6 +441,10 @@ static void sgx_write_pages(struct sgx_encl *encl, struct list_head *src)
 
 static void sgx_swap_pages(unsigned long nr_to_scan)
 {
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
+	
 	struct sgx_tgid_ctx *ctx;
 	struct sgx_encl *encl;
 	LIST_HEAD(cluster);
@@ -428,6 +469,10 @@ out:
 
 static int ksgxswapd(void *p)
 {
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
+	
 	set_freezable();
 
 	while (!kthread_should_stop()) {
@@ -451,6 +496,10 @@ int sgx_add_epc_bank(resource_size_t start, unsigned long size, int bank)
 	unsigned long i;
 	struct sgx_epc_page *new_epc_page, *entry;
 	struct list_head *parser, *temp;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	for (i = 0; i < size; i += PAGE_SIZE) {
 		new_epc_page = kzalloc(sizeof(*new_epc_page), GFP_KERNEL);
@@ -479,6 +528,10 @@ err_freelist:
 
 int sgx_page_cache_init(void)
 {
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
+	
 	struct task_struct *tmp;
 
 	sgx_nr_high_pages = 2 * sgx_nr_low_pages;
@@ -493,6 +546,10 @@ void sgx_page_cache_teardown(void)
 {
 	struct sgx_epc_page *entry;
 	struct list_head *parser, *temp;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	if (ksgxswapd_tsk) {
 		kthread_stop(ksgxswapd_tsk);
@@ -511,6 +568,10 @@ void sgx_page_cache_teardown(void)
 static struct sgx_epc_page *sgx_alloc_page_fast(void)
 {
 	struct sgx_epc_page *entry = NULL;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	spin_lock(&sgx_free_list_lock);
 
@@ -541,6 +602,10 @@ static struct sgx_epc_page *sgx_alloc_page_fast(void)
 struct sgx_epc_page *sgx_alloc_page(unsigned int flags)
 {
 	struct sgx_epc_page *entry;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	for ( ; ; ) {
 		entry = sgx_alloc_page_fast();
@@ -586,6 +651,10 @@ void sgx_free_page(struct sgx_epc_page *entry, struct sgx_encl *encl)
 {
 	void *epc;
 	int ret;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	epc = sgx_get_page(entry);
 	ret = __eremove(epc);
