@@ -79,6 +79,7 @@
 #define SGX_VA_SLOT_COUNT 512
 
 //**** CHANGES MADE HERE ****//
+#define DEBUG_IDENT 1
 #define DEBUG_PRINT 0
 #define DEBUG_PRINT_SGX_ENCL 0
 #define DEBUG_PRINT_SGX_IOCTL 0
