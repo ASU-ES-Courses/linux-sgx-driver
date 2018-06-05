@@ -391,7 +391,7 @@ void sgx_etrack(struct sgx_encl *encl)
 //*****************CHANGES MADE HERE ********************//
 void print_encl_stats(struct sgx_encl *encl) {
 
-/*  This is long version  */
+/*  This is long version  
   printk("\n******************** Enclave # %u ********************\nTotal Paged: %u \nTotal Loaded: %u \nTotal Evicted: %u \nEADD count: %u \mm_struct total pages mapped: %u \n*****************************************************\n", 
 	 encl->enclave_number,
 	 encl->epc_total_paged,
@@ -399,13 +399,16 @@ void print_encl_stats(struct sgx_encl *encl) {
 	 encl->epc_total_evicted,
 	 encl->eadd_count,
 	 encl->mm->total_vm);
+*/
 
 	
-/* short concise print version 
-  printk("\n** Enclave # %u ** Total Paged: %u ; Total Loaded: %u ; Total Evicted: %u ; \n", 
+/* short concise print version */
+  printk("\n** Enclave # %u ** Total Paged: %u ; Total Loaded: %u ; Total Evicted: %u ; EADD count: %u ; mm_struct total pages mapped: %u \n", 
 	 encl->enclave_number,
 	 encl->epc_total_paged,
 	 encl->epc_total_loaded,
-	 encl->epc_total_evicted);
-*/
+	 encl->epc_total_evicted,
+	 encl->eadd_count,
+	 encl->mm->total_vm);
+
 }
