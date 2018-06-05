@@ -962,6 +962,8 @@ void sgx_encl_release(struct kref *ref)
 	struct sgx_encl *encl = container_of(ref, struct sgx_encl, refcount);
 	struct radix_tree_iter iter;
 	void **slot;
+	
+	print_encl_stats(encl);
 
 	mutex_lock(&sgx_tgid_ctx_mutex);
 	if (!list_empty(&encl->encl_list))
