@@ -78,6 +78,9 @@
 
 #define SGX_VA_SLOT_COUNT 512
 
+//**** CHANGES MADE HERE ****//
+#define DEBUG_PRINT 0
+
 struct sgx_epc_page {
 	resource_size_t	pa;
 	struct list_head list;
