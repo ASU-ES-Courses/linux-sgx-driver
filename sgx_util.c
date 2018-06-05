@@ -110,6 +110,10 @@ void sgx_zap_tcs_ptes(struct sgx_encl *encl, struct vm_area_struct *vma)
 	struct sgx_epc_page *tmp;
 	struct sgx_encl_page *entry;
 	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
+	
 	list_for_each_entry(tmp, &encl->load_list, list) {
 		entry = tmp->encl_page;
 		if ((entry->flags & SGX_ENCL_PAGE_TCS) &&
@@ -124,6 +128,10 @@ void sgx_invalidate(struct sgx_encl *encl, bool flush_cpus)
 	struct vm_area_struct *vma;
 	unsigned long addr;
 	int ret;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	for (addr = encl->base; addr < (encl->base + encl->size);
 	     addr = vma->vm_end) {
@@ -142,10 +150,17 @@ void sgx_invalidate(struct sgx_encl *encl, bool flush_cpus)
 
 static void sgx_ipi_cb(void *info)
 {
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 }
 
 void sgx_flush_cpus(struct sgx_encl *encl)
 {
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
+	
 	on_each_cpu_mask(mm_cpumask(encl->mm), sgx_ipi_cb, NULL, 1);
 }
 
@@ -162,6 +177,10 @@ static int sgx_eldu(struct sgx_encl *encl,
 	void *epc_ptr;
 	void *va_ptr;
 	int ret;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	pcmd_offset = ((encl_page->addr >> PAGE_SHIFT) & 31) * 128;
 
@@ -346,6 +365,10 @@ struct sgx_encl_page *sgx_fault_page(struct vm_area_struct *vma,
 				     unsigned long addr,
 				     unsigned int flags)
 {
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
+	
 	struct sgx_encl_page *entry;
 	do {
 		entry = sgx_do_fault(vma, addr, flags);
@@ -360,6 +383,10 @@ void sgx_eblock(struct sgx_encl *encl, struct sgx_epc_page *epc_page)
 {
 	void *vaddr;
 	int ret;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	vaddr = sgx_get_page(epc_page);
 	ret = __eblock((unsigned long)vaddr);
@@ -376,6 +403,10 @@ void sgx_etrack(struct sgx_encl *encl)
 {
 	void *epc;
 	int ret;
+	
+	//**** CHANGES MADE HERE ***//
+	if (DEBUG_IDENT)
+		pr_info("%s: function call\n", __func__);
 
 	epc = sgx_get_page(encl->secs.epc_page);
 	ret = __etrack(epc);
