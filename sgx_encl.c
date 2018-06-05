@@ -76,6 +76,7 @@
 
 //********* CHANGES MADE HERE ************//
 static unsigned int sgx_enclave_number;
+static unsigned int eadd_count;
 
 struct sgx_add_page_req {
 	struct sgx_encl *encl;
@@ -211,6 +212,9 @@ static int sgx_eadd(struct sgx_epc_page *secs_page,
 	struct sgx_pageinfo pginfo;
 	void *epc_page_vaddr;
 	int ret;
+	
+	//*** CHANGES MADE HERE ****//
+	eadd_count++;
 
 	pginfo.srcpge = (unsigned long)kmap_atomic(backing);
 	pginfo.secs = (unsigned long)sgx_get_page(secs_page);
