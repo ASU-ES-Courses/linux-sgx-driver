@@ -194,7 +194,6 @@ static int sgx_eldu(struct sgx_encl *encl,
 	//******** CHANGES MADE HERE **********//
 	encl->epc_total_paged++;
 	encl->epc_total_loaded++;
-	pr_info("%s: Is anything working???!!!!\n", __func__);
 	print_encl_stats(encl);
 
 	ret = __eldu((unsigned long)&pginfo,
