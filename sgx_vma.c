@@ -74,8 +74,7 @@ static void sgx_vma_open(struct vm_area_struct *vma)
 	struct sgx_encl *encl = vma->vm_private_data;
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 
 	if (!encl)
 		return;
@@ -91,8 +90,7 @@ static void sgx_vma_close(struct vm_area_struct *vma)
 	struct sgx_encl *encl = vma->vm_private_data;
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 
 	if (!encl)
 		return;
@@ -143,8 +141,7 @@ static inline int sgx_vma_access_word(struct sgx_encl *encl,
 	int ret;
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 
 	offset = ((addr + i) & (PAGE_SIZE - 1)) & ~(sizeof(unsigned long) - 1);
 	align = (addr + i) & (sizeof(unsigned long) - 1);
@@ -206,8 +203,7 @@ static int sgx_vma_access(struct vm_area_struct *vma, unsigned long addr,
 	int i;
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 
 	/* If process was forked, VMA is still there but vm_private_data is set
 	 * to NULL.
