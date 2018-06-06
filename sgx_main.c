@@ -100,8 +100,7 @@ u32 sgx_xsave_size_tbl[64];
 long sgx_compat_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
 {
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 	
 	return sgx_ioctl(filep, cmd, arg);
 }
@@ -110,8 +109,7 @@ long sgx_compat_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
 static int sgx_mmap(struct file *file, struct vm_area_struct *vma)
 {
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 	
 	vma->vm_ops = &sgx_vm_ops;
 	vma->vm_flags |= VM_PFNMAP | VM_DONTEXPAND | VM_DONTDUMP | VM_IO |
@@ -127,8 +125,7 @@ static unsigned long sgx_get_unmapped_area(struct file *file,
 					   unsigned long flags)
 {
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 	
 	if (len < 2 * PAGE_SIZE || (len & (len - 1)))
 		return -EINVAL;
@@ -183,8 +180,7 @@ static int sgx_pm_suspend(struct device *dev)
 	struct sgx_encl *encl;
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 
 	list_for_each_entry(ctx, &sgx_tgid_ctx_list, list) {
 		list_for_each_entry(encl, &ctx->encl_list, encl_list) {
@@ -208,8 +204,7 @@ static int sgx_dev_init(struct device *parent)
 	int i;
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 
 	pr_info("intel_sgx: " DRV_DESCRIPTION " v" DRV_VERSION "\n");
 
@@ -319,8 +314,7 @@ static int sgx_drv_probe(struct platform_device *pdev)
 	unsigned long fc;
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 	
 	if (atomic_cmpxchg(&sgx_init_flag, 0, 1)) {
 		pr_warn("intel_sgx: second initialization call skipped\n");
@@ -368,8 +362,7 @@ static int sgx_drv_remove(struct platform_device *pdev)
 	int i;
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 
 	if (!atomic_cmpxchg(&sgx_init_flag, 1, 0)) {
 		pr_warn("intel_sgx: second release call skipped\n");
@@ -411,8 +404,7 @@ int init_sgx_module(void)
 {
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 	
 	platform_driver_register(&sgx_drv);
 	pdev = platform_device_register_simple("intel_sgx", 0, NULL, 0);
@@ -425,8 +417,7 @@ void cleanup_sgx_module(void)
 {
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 	
 	dev_set_uevent_suppress(&pdev->dev, true);
 	platform_device_unregister(pdev);
