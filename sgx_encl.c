@@ -1025,6 +1025,7 @@ void sgx_encl_release(struct kref *ref)
 	
 	//**** CHANGES MADE HERE ***//
 	print_function(__func__);
+	print_encl_stats(encl);
 	
 	print_encl_stats(encl);
 
