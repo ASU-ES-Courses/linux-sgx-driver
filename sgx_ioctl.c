@@ -80,8 +80,7 @@ static int sgx_get_encl(unsigned long addr, struct sgx_encl **encl)
 	int ret;
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 
 	if (addr & (PAGE_SIZE - 1))
 		return -EINVAL;
@@ -124,8 +123,7 @@ static long sgx_ioc_enclave_create(struct file *filep, unsigned int cmd,
 	int ret;
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 
 	secs = kzalloc(sizeof(*secs),  GFP_KERNEL);
 	if (!secs)
@@ -169,8 +167,7 @@ static long sgx_ioc_enclave_add_page(struct file *filep, unsigned int cmd,
 	int ret;
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 
 	ret = sgx_get_encl(addp->addr, &encl);
 	if (ret)
@@ -232,8 +229,7 @@ static long sgx_ioc_enclave_init(struct file *filep, unsigned int cmd,
 	int ret;
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 
 	initp_page = alloc_page(GFP_HIGHUSER);
 	if (!initp_page)
@@ -277,8 +273,7 @@ long sgx_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
 	long ret;
 	
 	//**** CHANGES MADE HERE ***//
-	if (DEBUG_IDENT)
-		pr_info("%s: function call\n", __func__);
+	print_function(__func__);
 
 	switch (cmd) {
 	case SGX_IOC_ENCLAVE_CREATE:
