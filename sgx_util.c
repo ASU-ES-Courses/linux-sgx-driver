@@ -331,6 +331,13 @@ static struct sgx_encl_page *sgx_do_fault(struct vm_area_struct *vma,
 
 	if (reserve)
 		entry->flags |= SGX_ENCL_PAGE_RESERVED;
+	
+	/*
+	sgx_encl *encl = vma->vm_private_data
+	sgx_encl_page *entry
+	sgx_epc_page *epc_page
+	sgx_epc_page *secs_epc_page
+	*/
 
 	/* Do not free */
 	epc_page = NULL;
