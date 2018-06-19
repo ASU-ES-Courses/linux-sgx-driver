@@ -444,6 +444,9 @@ static void sgx_swap_pages(unsigned long nr_to_scan)
 	struct sgx_tgid_ctx *ctx;
 	struct sgx_encl *encl;
 	LIST_HEAD(cluster);
+	
+	printk("finding ctx...\n");
+	printctx();
 
 	ctx = sgx_isolate_tgid_ctx(nr_to_scan);
 	if (!ctx)
@@ -467,6 +470,8 @@ static int ksgxswapd(void *p)
 {
 	//**** CHANGES MADE HERE ***//
 	print_function(__func__);
+	
+	printk("ksgxswapd started\n");
 	
 	set_freezable();
 
@@ -695,6 +700,16 @@ SUMMARY:
 	'kmap_atomic' maps a page, has return value
 	'kunmap_atomic' unmaps a page using return value from 'kmap_atomic' as arg
 */
+
+void printctx(void){
+	
+	printk("sgx_tgid_ctx_list...\n");
+	struct list_head *loop_cursor;
+	list_for_each_entry(loop_cursor, &sgx_tgid_ctx_list) {
+		printk("%i  -->\n", loop_cursor.tgid->count);
+	}
+	printk("END_OF_LIST....\n");
+}
 
 
 
