@@ -104,7 +104,7 @@ static void printctx(void){
 		printk("looping...\n");
 	}
 	
-	printk("END_OF_LIST....\n");
+	printk("END_OF_LIST....\n\n");
 }
 
 static int sgx_test_and_clear_young_cb(pte_t *ptep, pgtable_t token,
@@ -461,12 +461,16 @@ static void sgx_swap_pages(unsigned long nr_to_scan)
 	struct sgx_encl *encl;
 	LIST_HEAD(cluster);
 	
-	printk("finding ctx...\n");
+	// ***** CHANGES MADE HERE****** //
+	printk("\nfinding ctx...\n");
 	printctx();
 
 	ctx = sgx_isolate_tgid_ctx(nr_to_scan);
 	if (!ctx)
 		return;
+	
+	// ****** CHANGES MADE HERE ***** //
+	print("Found ctx: %i\n\n", ctx->tgid->count);
 
 	encl = sgx_isolate_encl(ctx, nr_to_scan);
 	if (!encl)
