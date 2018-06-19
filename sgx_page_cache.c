@@ -485,7 +485,7 @@ static void sgx_swap_pages(unsigned long nr_to_scan)
 	// ****** CHANGES MADE HERE ***** //
 	printk("Found ctx: %i\n\n", ctx->tgid->count);
 	
-	printf("finding encl...\n");
+	printk("finding encl...\n");
 	print_encl_list(ctx);
 
 	encl = sgx_isolate_encl(ctx, nr_to_scan);
