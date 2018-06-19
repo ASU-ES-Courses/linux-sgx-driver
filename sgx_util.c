@@ -246,7 +246,7 @@ static struct sgx_encl_page *sgx_do_fault(struct vm_area_struct *vma,
 	int rc = 0;
 	
 	//**** CHANGES MADE HERE *******//
-	pr_info("%s: Executing SGX page fault\n", __func__);
+	//pr_info("%s: Executing SGX page fault\n", __func__);
 
 	/* If process was forked, VMA is still there but vm_private_data is set
 	 * to NULL.
