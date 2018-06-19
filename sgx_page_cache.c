@@ -705,7 +705,7 @@ void printctx(void){
 	
 	printk("sgx_tgid_ctx_list...\n");
 	struct list_head *loop_cursor;
-	list_for_each_entry(loop_cursor, &sgx_tgid_ctx_list) {
+	list_for_each(loop_cursor, &sgx_tgid_ctx_list) {
 		printk("%i  -->\n", loop_cursor.tgid->count);
 	}
 	printk("END_OF_LIST....\n");
