@@ -208,8 +208,8 @@ static struct sgx_tgid_ctx *sgx_isolate_tgid_ctx(unsigned long nr_to_scan)
 		//	}
 		//Increment refcount for object unless it is zero.Return non-zero if the increment succeeded. Otherwise return 0./
 		/* Non-empty TGID context? */
-		if (!list_empty(&ctx->encl_list) &&
-		    kref_get_unless_zero(&ctx->refcount))
+		if (!list_empty(&ctx->encl_list) && //If not empty
+		    kref_get_unless_zero(&ctx->refcount)) //If no error incrementing
 			break;
 
 		ctx = NULL;
