@@ -702,7 +702,7 @@ SUMMARY:
 */
 
 void printctx(void){
-	
+	/*
 	struct sgx_tgid_ctx *ctx;
 	
 	printk("sgx_tgid_ctx_list...\n");
@@ -711,6 +711,7 @@ void printctx(void){
 		ctx = list_entry(loop_cursor, sgx_tgid_ctx, list);
 		printk("%i  -->\n", ctx->tgid->count);
 	}
+	*/
 	printk("END_OF_LIST....\n");
 }
 
