@@ -99,7 +99,7 @@ static void printctx(void){
 	printk("sgx_tgid_ctx_list...\n");
 	
 	list_for_each(loop_cursor, &sgx_tgid_ctx_list) {
-		//ctx = list_entry(loop_cursor, sgx_tgid_ctx, list);
+		ctx = list_entry(loop_cursor, sgx_tgid_ctx, list);
 		//printk("%i  -->\n", ctx->tgid->count);
 		printk("looping...\n");
 	}
