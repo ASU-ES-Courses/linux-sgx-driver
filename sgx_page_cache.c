@@ -94,12 +94,14 @@ static DECLARE_WAIT_QUEUE_HEAD(ksgxswapd_waitq);
 static void printctx(void){
 	
 	struct sgx_tgid_ctx *ctx;
+	struct list_head *loop_cursor;
 	
 	printk("sgx_tgid_ctx_list...\n");
-	struct list_head *loop_cursor;
+	
 	list_for_each(loop_cursor, &sgx_tgid_ctx_list) {
-		ctx = list_entry(loop_cursor, sgx_tgid_ctx, list);
-		printk("%i  -->\n", ctx->tgid->count);
+		//ctx = list_entry(loop_cursor, sgx_tgid_ctx, list);
+		//printk("%i  -->\n", ctx->tgid->count);
+		printk("looping...\n");
 	}
 	
 	printk("END_OF_LIST....\n");
