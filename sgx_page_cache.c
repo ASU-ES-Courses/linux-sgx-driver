@@ -202,6 +202,10 @@ static struct sgx_tgid_ctx *sgx_isolate_tgid_ctx(unsigned long nr_to_scan)
 		list_move_tail(&ctx->list, &sgx_tgid_ctx_list);
 
 		//"list_empty()" returns 0 if a list is not empty and non 0 otherwise://
+		//if (list_empty(&hdr))
+		//	{
+				/* The list is empty */
+		//	}
 		//Increment refcount for object unless it is zero.Return non-zero if the increment succeeded. Otherwise return 0./
 		/* Non-empty TGID context? */
 		if (!list_empty(&ctx->encl_list) &&
