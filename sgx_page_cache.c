@@ -91,15 +91,15 @@ static unsigned int sgx_nr_high_pages;
 static struct task_struct *ksgxswapd_tsk;
 static DECLARE_WAIT_QUEUE_HEAD(ksgxswapd_waitq);
 
-static void print_encl_list(struct sgx_tgid_ctx ctx) {
+static void print_encl_list(struct sgx_tgid_ctx *ctx) {
 	
 	struct sgx_encl *encl;
 	struct list_head *loop_cursor;
 	
 	printk("sgx_encl list...\n");
 	
-	list_for_each(loop_cursor, &ctx->encl_list) {
-		encl = list_entry(ctx->encl_list, struct sgx_encl, encl_list);
+	list_for_each(loop_cursor, ctx->encl_list) {
+		encl = list_entry(&ctx->encl_list, struct sgx_encl, encl_list);
 	}
 	printk("END_OF_LIST...\n\n");
 }
