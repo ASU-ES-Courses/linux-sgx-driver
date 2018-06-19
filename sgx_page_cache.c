@@ -470,7 +470,7 @@ static void sgx_swap_pages(unsigned long nr_to_scan)
 		return;
 	
 	// ****** CHANGES MADE HERE ***** //
-	print("Found ctx: %i\n\n", ctx->tgid->count);
+	printk("Found ctx: %i\n\n", ctx->tgid->count);
 
 	encl = sgx_isolate_encl(ctx, nr_to_scan);
 	if (!encl)
