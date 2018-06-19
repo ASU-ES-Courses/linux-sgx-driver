@@ -99,7 +99,8 @@ static void print_encl_list(struct sgx_tgid_ctx *ctx) {
 	printk("sgx_encl list...\n");
 	
 	list_for_each(loop_cursor, ctx->encl_list) {
-		encl = list_entry(&ctx->encl_list, struct sgx_encl, encl_list);
+		//encl = list_entry(&ctx->encl_list, struct sgx_encl, encl_list);
+		printk("looping...\n");
 	}
 	printk("END_OF_LIST...\n\n");
 }
@@ -114,7 +115,6 @@ static void printctx(void){
 	list_for_each(loop_cursor, &sgx_tgid_ctx_list) {
 		ctx = list_entry(loop_cursor, struct sgx_tgid_ctx, list);
 		printk("%i  -->\n", ctx->tgid->count);
-		printk("looping...\n");
 	}
 	
 	printk("END_OF_LIST....\n\n");
