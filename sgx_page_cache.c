@@ -91,6 +91,20 @@ static unsigned int sgx_nr_high_pages;
 static struct task_struct *ksgxswapd_tsk;
 static DECLARE_WAIT_QUEUE_HEAD(ksgxswapd_waitq);
 
+static void printctx(void){
+	/*
+	struct sgx_tgid_ctx *ctx;
+	
+	printk("sgx_tgid_ctx_list...\n");
+	struct list_head *loop_cursor;
+	list_for_each(loop_cursor, &sgx_tgid_ctx_list) {
+		ctx = list_entry(loop_cursor, sgx_tgid_ctx, list);
+		printk("%i  -->\n", ctx->tgid->count);
+	}
+	*/
+	printk("END_OF_LIST....\n");
+}
+
 static int sgx_test_and_clear_young_cb(pte_t *ptep, pgtable_t token,
 				       unsigned long addr, void *data)
 {
@@ -700,20 +714,6 @@ SUMMARY:
 	'kmap_atomic' maps a page, has return value
 	'kunmap_atomic' unmaps a page using return value from 'kmap_atomic' as arg
 */
-
-void printctx(void){
-	/*
-	struct sgx_tgid_ctx *ctx;
-	
-	printk("sgx_tgid_ctx_list...\n");
-	struct list_head *loop_cursor;
-	list_for_each(loop_cursor, &sgx_tgid_ctx_list) {
-		ctx = list_entry(loop_cursor, sgx_tgid_ctx, list);
-		printk("%i  -->\n", ctx->tgid->count);
-	}
-	*/
-	printk("END_OF_LIST....\n");
-}
 
 
 
