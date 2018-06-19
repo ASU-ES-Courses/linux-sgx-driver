@@ -703,10 +703,13 @@ SUMMARY:
 
 void printctx(void){
 	
+	struct sgx_tgid_ctx *ctx;
+	
 	printk("sgx_tgid_ctx_list...\n");
 	struct list_head *loop_cursor;
 	list_for_each(loop_cursor, &sgx_tgid_ctx_list) {
-		printk("%i  -->\n", loop_cursor.tgid->count);
+		ctx = list_first_entry(loop_cursor, sgx_tgid_ctx, list);
+		printk("%i  -->\n", ctx.tgid->count);
 	}
 	printk("END_OF_LIST....\n");
 }
