@@ -101,7 +101,6 @@ static void print_encl_list(struct sgx_tgid_ctx *ctx) {
 	list_for_each(loop_cursor, &ctx->encl_list) {
 		encl = list_entry(&ctx->encl_list, struct sgx_encl, encl_list);
 		printk("encl: %i\n", encl->enclave_number);
-		printk("looping...\n");
 	}
 	printk("END_OF_LIST...\n\n");
 }
@@ -492,6 +491,8 @@ static void sgx_swap_pages(unsigned long nr_to_scan)
 	encl = sgx_isolate_encl(ctx, nr_to_scan);
 	if (!encl)
 		goto out;
+	
+	printk("Found enclave: %i\n\n", encl->enclave_number);
 
 	down_read(&encl->mm->mmap_sem);
 	sgx_isolate_pages(encl, &cluster, nr_to_scan);
