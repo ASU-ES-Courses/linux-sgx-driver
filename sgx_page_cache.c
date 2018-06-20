@@ -115,7 +115,7 @@ static void printctx(void){
 	
 	struct sgx_tgid_ctx *add;
 	add = kmalloc(sizeof(struct sgx_tgid_ctx), GFP_KERNEL);
-	list_move_tail(&add->list, &sgx_tgid_ctx_list);
+	list_move_tail(add->list, &sgx_tgid_ctx_list);
 	
 	list_for_each(loop_cursor, &sgx_tgid_ctx_list) {
 		ctx = list_entry(loop_cursor, struct sgx_tgid_ctx, list);
