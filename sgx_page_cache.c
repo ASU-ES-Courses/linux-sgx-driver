@@ -62,6 +62,7 @@
 //#include "debug.h"
 #include <linux/module.h>
 #include <linux/kernel.h>
+#include <linux/slab.h>
 
 #include "sgx.h"
 #include <linux/freezer.h>
@@ -113,7 +114,7 @@ static void printctx(void){
 	printk("sgx_tgid_ctx_list...\n");
 	
 	struct sgx_tgid_ctx *add;
-	add = malloc(sizeof(struct sgx_tgid_ctx));
+	add = kmalloc(sizeof(struct sgx_tgid_ctx), GFP_KERNEL);
 	list_move_tail(&add->list, &sgx_tgid_ctx_list);
 	
 	list_for_each(loop_cursor, &sgx_tgid_ctx_list) {
