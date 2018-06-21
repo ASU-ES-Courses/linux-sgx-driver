@@ -438,7 +438,7 @@ void print_encl_stats(struct sgx_encl *encl) {
 
 	
 /* short concise print version */
-  printk("\n** Enclave # %u ** Total Paged: %u ; Total Loaded: %u ; Total Evicted: %u ; EADD count: %u ; mm_struct total pages mapped: %u \n", 
+  printk("\n** Edited Enclave # %u ** Total Paged: %u ; Total Loaded: %u ; Total Evicted: %u ; EADD count: %u ; mm_struct total pages mapped: %u \n", 
 	 encl->enclave_number,
 	 encl->epc_total_paged,
 	 encl->epc_total_loaded,
