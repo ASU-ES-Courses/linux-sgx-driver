@@ -95,13 +95,17 @@ static DECLARE_WAIT_QUEUE_HEAD(ksgxswapd_waitq);
 static void print_encl_list(struct sgx_tgid_ctx *ctx) {
 	
 	struct sgx_encl *encl;
+	struct sgx_encl *first_encl;
 	struct list_head *loop_cursor;
 	
 	printk("sgx_encl list...\n");
 	
 	list_for_each(loop_cursor, &ctx->encl_list) {
 		encl = list_entry(&ctx->encl_list, struct sgx_encl, encl_list);
+		first_encl = list_first_entry(&ctx->encl_list, struct sgx_encl, encl_list);
 		printk("encl: %i\n", encl->enclave_number);
+		printk("encl addr print: %i\n", &encl->enclave_number);
+		printk("first encl: %i\n", first_encl->enclave_number);
 	}
 	printk("END_OF_LIST...\n\n");
 }
@@ -493,6 +497,7 @@ static void sgx_swap_pages(unsigned long nr_to_scan)
 	if (!encl)
 		goto out;
 	
+	// ******* CHANGES MADE HERE ****** //
 	printk("Found enclave: %i\n\n", encl->enclave_number);
 
 	down_read(&encl->mm->mmap_sem);
