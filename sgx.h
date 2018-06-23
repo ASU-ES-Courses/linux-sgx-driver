@@ -132,6 +132,9 @@ struct sgx_encl_page {
 	struct sgx_epc_page *epc_page;
 	struct sgx_va_page *va_page;
 	unsigned int va_offset;
+	
+	// Boolean true or false :)
+	int chosen_to_be_evicted;
 };
 
 struct sgx_tgid_ctx {
