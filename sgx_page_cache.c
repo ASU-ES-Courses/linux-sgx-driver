@@ -517,6 +517,7 @@ static void sgx_swap_pages(unsigned long nr_to_scan)
 	
 	// *** CHANGES MADE HERE ****//
 	printk("Total chosen evicted: %i\n", evicted_this_round);
+	evicted_this_round = 0;
 	up_read(&encl->mm->mmap_sem);
 
 	kref_put(&encl->refcount, sgx_encl_release);
