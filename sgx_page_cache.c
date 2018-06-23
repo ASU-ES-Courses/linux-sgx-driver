@@ -423,7 +423,7 @@ static void sgx_evict_page(struct sgx_encl_page *entry,
 	//**** CHANGES MADE HERE ***//
 	print_function(__func__);
 	evicted_this_round++;
-	printk("Page Evicted: Chosen? %i\n", entry->epc_page->chosen_to_be_evicted);
+	printk("Page Evicted: Chosen? %i\n", entry->chosen_to_be_evicted);
 	
 	sgx_ewb(encl, entry);
 	sgx_free_page(entry->epc_page, encl);
