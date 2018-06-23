@@ -97,7 +97,6 @@ static unsigned int evicted_this_round;
 
 static void print_encl_list(struct sgx_tgid_ctx *ctx) {
 	
-	struct sgx_encl *encl;
 	struct sgx_encl *first_encl;
 	struct sgx_encl *last_encl;
 	struct list_head *loop_cursor;
@@ -105,11 +104,8 @@ static void print_encl_list(struct sgx_tgid_ctx *ctx) {
 	printk("sgx_encl list...\n");
 	
 	list_for_each(loop_cursor, &ctx->encl_list) {
-		encl = list_entry(&ctx->encl_list, struct sgx_encl, encl_list);
 		first_encl = list_first_entry(&ctx->encl_list, struct sgx_encl, encl_list);
 		last_encl = list_last_entry(&ctx->encl_list, struct sgx_encl, encl_list);
-		printk("encl: %i\n", encl->enclave_number);
-		printk("encl addr print: %i\n", &encl->enclave_number);
 		printk("first encl: %i\n", first_encl->enclave_number);
 		printk("last encl: %i\n", last_encl->enclave_number);
 	}
