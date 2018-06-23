@@ -92,6 +92,9 @@ static unsigned int sgx_nr_high_pages;
 static struct task_struct *ksgxswapd_tsk;
 static DECLARE_WAIT_QUEUE_HEAD(ksgxswapd_waitq);
 
+// ** CHANGES MADE HERE ** //
+static unsigned int evicted_this_round;
+
 static void print_encl_list(struct sgx_tgid_ctx *ctx) {
 	
 	struct sgx_encl *encl;
@@ -319,12 +322,15 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 					 struct sgx_epc_page,
 					 list);
 
+		//Returns 1 if the page has beenrecently accessed and 0 if not
 		if (!sgx_test_and_clear_young(entry->encl_page, encl) &&
 		    !(entry->encl_page->flags & SGX_ENCL_PAGE_RESERVED)) {
 			entry->encl_page->flags |= SGX_ENCL_PAGE_RESERVED;
 			list_move_tail(&entry->list, dst);
+			entry->encl_page.chosen_to_be_evicted = 1;
 		} else {
 			list_move_tail(&entry->list, &encl->load_list);
+			entry->encl_page.chosen_to_be_evicted = 0;
 		}
 	}
 out:
@@ -416,6 +422,8 @@ static void sgx_evict_page(struct sgx_encl_page *entry,
 {
 	//**** CHANGES MADE HERE ***//
 	print_function(__func__);
+	evicted_this_round++;
+	printk("Page Evicted: Chosen? %i\n", entry->epc_page.chosen_to_be_evicted);
 	
 	sgx_ewb(encl, entry);
 	sgx_free_page(entry->epc_page, encl);
@@ -506,6 +514,9 @@ static void sgx_swap_pages(unsigned long nr_to_scan)
 	down_read(&encl->mm->mmap_sem);
 	sgx_isolate_pages(encl, &cluster, nr_to_scan);
 	sgx_write_pages(encl, &cluster);
+	
+	// *** CHANGES MADE HERE ****//
+	printk("Total chosen evicted: %i\n", evicted_this_round);
 	up_read(&encl->mm->mmap_sem);
 
 	kref_put(&encl->refcount, sgx_encl_release);
