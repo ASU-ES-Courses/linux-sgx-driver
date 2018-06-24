@@ -134,7 +134,12 @@ struct sgx_encl_page {
 	unsigned int va_offset;
 	
 	// Boolean true or false :)
-	int chosen_to_be_evicted;
+	unsigned int chosen_to_be_evicted;
+	
+	// 0 evicted
+	// 1 cold list
+	// 2 warm list
+	unsigned int LRU_2;
 };
 
 struct sgx_tgid_ctx {
