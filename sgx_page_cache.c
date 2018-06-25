@@ -507,33 +507,34 @@ static void sgx_swap_pages(unsigned long nr_to_scan)
 	LIST_HEAD(cluster);
 	
 	// ***** CHANGES MADE HERE****** //
-	printk("\nfinding ctx...\n");
-	printctx();
+	//printk("\nfinding ctx...\n");
+	//printctx();
 
 	ctx = sgx_isolate_tgid_ctx(nr_to_scan);
 	if (!ctx)
 		return;
 	
 	// ****** CHANGES MADE HERE ***** //
-	printk("Found ctx: %i\n\n", ctx->tgid->count);
+	//printk("Found ctx: %i\n\n", ctx->tgid->count);
 	
-	printk("finding encl...\n");
-	print_encl_list(ctx);
+	//printk("finding encl...\n");
+	//print_encl_list(ctx);
 
 	encl = sgx_isolate_encl(ctx, nr_to_scan);
 	if (!encl)
 		goto out;
 	
 	// ******* CHANGES MADE HERE ****** //
-	printk("Found enclave: %i\n\n", encl->enclave_number);
+	//printk("Found enclave: %i\n\n", encl->enclave_number);
 
 	down_read(&encl->mm->mmap_sem);
 	sgx_isolate_pages(encl, &cluster, nr_to_scan);
 	sgx_write_pages(encl, &cluster);
 	
 	// *** CHANGES MADE HERE ****//
-	printk("Total chosen evicted: %i\n", evicted_this_round);
-	evicted_this_round = 0;
+	//printk("Total chosen evicted: %i\n", evicted_this_round);
+	//evicted_this_round = 0;
+	
 	up_read(&encl->mm->mmap_sem);
 
 	kref_put(&encl->refcount, sgx_encl_release);
