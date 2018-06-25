@@ -304,6 +304,9 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 	
 	//**** CHANGES MADE HERE ***//
 	print_function(__func__);
+	
+	// ** LRU/2 CHANGES ** //
+	unsigned int LRU_list;
 
 	mutex_lock(&encl->lock);
 
@@ -317,16 +320,33 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 		entry = list_first_entry(&encl->load_list,
 					 struct sgx_epc_page,
 					 list);
-
+		
+		// ** LRU/2 CHANGES ** //
+		LRU_list = entry->encl_page->LRU_2;
 		//Returns 1 if the page has beenrecently accessed and 0 if not
 		if (!sgx_test_and_clear_young(entry->encl_page, encl) &&
 		    !(entry->encl_page->flags & SGX_ENCL_PAGE_RESERVED)) {
-			entry->encl_page->flags |= SGX_ENCL_PAGE_RESERVED;
-			list_move_tail(&entry->list, dst);
+			
+			if(LRU_list == 1) {
+				entry->encl_page->LRU_2 = 0;
+				entry->encl_page->flags |= SGX_ENCL_PAGE_RESERVED;
+				list_move_tail(&entry->list, dst);
+			} else if (LRU_list == 2) {
+				entry->encl_page->LRU_2 = 1;
+				list_move_tail(&entry->list, &encl->load_list);
+			} else {
+				printk("ERROR!!!! LRU_PAGING VALUE OUT OF BOUNDS: LRU_list=%i\n", LRU_list);
+			}
 			entry->encl_page->chosen_to_be_evicted = 1;
 		} else {
-			list_move_tail(&entry->list, &encl->load_list);
-			entry->encl_page->chosen_to_be_evicted = 0;
+			
+			if (LRU_list == 1 || LRU_list == 2) {
+				entry->encl_page->LRU_list = 2;
+				list_move_tail(&entry->list, &encl->load_list);
+				entry->encl_page->chosen_to_be_evicted = 0;
+			} else {
+				printk("ERROR!!!! LRU_PAGING VALUE OUT OF BOUNDS: LRU_list=%i\n", LRU_list);
+			}
 		}
 	}
 out:
