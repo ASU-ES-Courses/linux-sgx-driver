@@ -341,6 +341,7 @@ static struct sgx_encl_page *sgx_do_fault(struct vm_area_struct *vma,
 
 	/* Do not free */
 	epc_page = NULL;
+	&entry.LRU_2 = 1;
 	list_add_tail(&entry->epc_page->list, &encl->load_list);
 
 	rc = vm_insert_pfn(vma, entry->addr, PFN_DOWN(entry->epc_page->pa));
