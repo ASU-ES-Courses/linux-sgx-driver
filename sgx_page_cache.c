@@ -336,7 +336,7 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 				entry->encl_page->LRU_2 = 1;
 				list_move_tail(&entry->list, &encl->load_list);
 			} else {
-				printk("ERROR!!!! LRU_PAGING VALUE OUT OF BOUNDS: LRU_list=%i\n", LRU_list);
+				printk("UNLOADING ERROR!!!! LRU_PAGING VALUE OUT OF BOUNDS: LRU_list=%i\n", LRU_list);
 			}
 			entry->encl_page->chosen_to_be_evicted = 1;
 		} else {
@@ -347,7 +347,7 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 				list_move_tail(&entry->list, &encl->load_list);
 				entry->encl_page->chosen_to_be_evicted = 0;
 			} else {
-				printk("ERROR!!!! LRU_PAGING VALUE OUT OF BOUNDS: LRU_list=%i\n", LRU_list);
+				printk("LOADING ERROR!!!! LRU_PAGING VALUE OUT OF BOUNDS: LRU_list=%i\n", LRU_list);
 			}
 		}
 	}
