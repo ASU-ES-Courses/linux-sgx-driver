@@ -531,6 +531,9 @@ static int sgx_init_page(struct sgx_encl *encl, struct sgx_encl_page *entry,
 	entry->va_page = va_page;
 	entry->va_offset = va_offset;
 	entry->addr = addr;
+	
+	// ** LRU_2 CHANGE ** //
+	entry->LRU_2 = 1;
 
 	return 0;
 }
