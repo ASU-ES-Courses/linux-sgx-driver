@@ -347,7 +347,7 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 				list_move_tail(&entry->list, &encl->load_list);
 				entry->encl_page->chosen_to_be_evicted = 0;
 			} else {
-				entry->encl_page->LRU_2 = LRU_list++;
+				entry->encl_page->LRU_2 = LRU_list + 1;
 				list_move_tail(&entry->list, &encl->load_list);
 				entry->encl_page->chosen_to_be_evicted = 0;
 			}
