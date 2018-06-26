@@ -321,6 +321,7 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 					 struct sgx_epc_page,
 					 list);
 		
+		LRU_list = entry->encl_page->LRU_2;
 		printk("LRU_list: %i\n", LRU_list);
 		//Returns 1 if the page has beenrecently accessed and 0 if not
 		if (!sgx_test_and_clear_young(entry->encl_page, encl) &&
@@ -341,13 +342,14 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 			entry->encl_page->chosen_to_be_evicted = 1;
 		} else {
 			
-			if (LRU_list == 1 || LRU_list == 2) {
+			if (LRU_list == 2) {
 				printk("LRU_list: 2\n");
-				entry->encl_page->LRU_2 = 2;
 				list_move_tail(&entry->list, &encl->load_list);
 				entry->encl_page->chosen_to_be_evicted = 0;
 			} else {
-				printk("LOADING ERROR!!!! LRU_PAGING VALUE OUT OF BOUNDS: LRU_list=%i\n", LRU_list);
+				entry->encl_page->LRU_2++;
+				list_move_tail(&entry->list, &encl->load_list);
+				entry->encl_page->chosen_to_be_evicted = 0;(
 			}
 		}
 	}
