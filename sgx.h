@@ -139,7 +139,7 @@ struct sgx_encl_page {
 	// 0 evicted
 	// 1 cold list
 	// 2 warm list
-	unsigned int LRU_2 = 1;
+	unsigned int LRU_2;
 };
 
 struct sgx_tgid_ctx {
