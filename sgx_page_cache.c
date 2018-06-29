@@ -306,7 +306,8 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 	print_function(__func__);
 	
 	// ** LRU/2 CHANGES ** //
-	unsigned int LRU_list;
+	unsigned int LRU_list_before;
+	unsigned int LRU_list_after;
 
 	mutex_lock(&encl->lock);
 
@@ -321,35 +322,39 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 					 struct sgx_epc_page,
 					 list);
 		
-		LRU_list = entry->encl_page->LRU_2;
+		LRU_list_before = entry->encl_page->LRU_2;
 		
 		//Returns 1 if the page has been recently accessed and 0 if not
 		if (!sgx_test_and_clear_young(entry->encl_page, encl) &&
 		    !(entry->encl_page->flags & SGX_ENCL_PAGE_RESERVED)) {
-			LRU_list--;
+			LRU_list_after = LRU_list_before - 1;
 			
-			if(LRU_list <= 0) {
+			if(LRU_list_after <= 0) {
 				entry->encl_page->LRU_2 = 0;
 				entry->encl_page->flags |= SGX_ENCL_PAGE_RESERVED;
 				list_move_tail(&entry->list, dst);
 				entry->encl_page->chosen_to_be_evicted = 1;
 			} else {
-				entry->encl_page->LRU_2 = LRU_list;
+				entry->encl_page->LRU_2 = LRU_list_after;
 				list_move_tail(&entry->list, &encl->load_list);
 				entry->encl_page->chosen_to_be_evicted = 0;
 			}
-		} else {
-			LRU_list++;
 			
-			if (LRU_list >= 2) {
+			printk("Evicting! Before: %i, After: %i\n", LRU_list_before, LRU_list_after);
+			
+		} else {
+			LRU_list_after = LRU_list_before + 1;
+			
+			if (LRU_list_after >= 2) {
 				entry->encl_page->LRU_2 = 2;
 			} else {
-				entry->encl_page->LRU_2 = LRU_list;	
+				entry->encl_page->LRU_2 = LRU_list_after;	
 			}
 			list_move_tail(&entry->list, &encl->load_list);
 			entry->encl_page->chosen_to_be_evicted = 0;
+			
+			printk("Loading! Before: %i, After: %i\n", LRU_list_before, LRU_list_after);
 		}
-		printk("AFTER LRU_list: %i\n", LRU_list);
 	}
 out:
 	mutex_unlock(&encl->lock);
