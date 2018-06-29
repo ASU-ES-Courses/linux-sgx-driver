@@ -95,6 +95,10 @@ static DECLARE_WAIT_QUEUE_HEAD(ksgxswapd_waitq);
 // ** CHANGES MADE HERE ** //
 static unsigned int evicted_this_round;
 
+// ** LRU_2 CHANGES ** //
+static unsigned int evicted;
+static unsigned int loaded;
+
 static void print_encl_list(struct sgx_tgid_ctx *ctx) {
 	
 	struct sgx_encl *first_encl;
@@ -340,7 +344,8 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 				entry->encl_page->chosen_to_be_evicted = 0;
 			}
 			
-			printk("Evicting! Before: %i, After: %i\n", LRU_list_before, LRU_list_after);
+			evicted++;
+			printk("Evicting! Before: %i, After: %i .... evicted: %i, loaded: %i\n", LRU_list_before, LRU_list_after, evicted, loaded);
 			
 		} else {
 			LRU_list_after = LRU_list_before + 1;
@@ -353,7 +358,8 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 			list_move_tail(&entry->list, &encl->load_list);
 			entry->encl_page->chosen_to_be_evicted = 0;
 			
-			printk("Loading! Before: %i, After: %i\n", LRU_list_before, LRU_list_after);
+			loaded++;
+			printk("Evicting! Before: %i, After: %i .... evicted: %i, loaded: %i\n", LRU_list_before, LRU_list_after, evicted, loaded);
 		}
 	}
 out:
