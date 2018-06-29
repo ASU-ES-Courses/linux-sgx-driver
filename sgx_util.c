@@ -176,6 +176,7 @@ static int sgx_eldu(struct sgx_encl *encl,
 	
 	//**** CHANGES MADE HERE ***//
 	print_function(__func__);
+	encl_page->LRU_2++;
 
 	pcmd_offset = ((encl_page->addr >> PAGE_SHIFT) & 31) * 128;
 
