@@ -348,7 +348,7 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 			}
 			
 			evicted++;
-			//printk("       Evicting! Before: %i, After: %i .... evicted: %i, loaded: %i       ", LRU_list_before, LRU_list_after, evicted, loaded);
+			printk("       Evicting! Before: %i, After: %i .... evicted: %i, loaded: %i       ", LRU_list_before, LRU_list_after, evicted, loaded);
 			
 		} else {
 			LRU_list_after = LRU_list_before + 1;
@@ -362,7 +362,7 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 			entry->encl_page->chosen_to_be_evicted = 0;
 			
 			loaded++;
-			//printk("       Evicting! Before: %i, After: %i .... evicted: %i, loaded: %i       ", LRU_list_before, LRU_list_after, evicted, loaded);
+			printk("       Evicting! Before: %i, After: %i .... evicted: %i, loaded: %i       ", LRU_list_before, LRU_list_after, evicted, loaded);
 		}
 		
 		if (LRU_list_after >= 2)
@@ -372,7 +372,7 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 		else if (LRU_list_after <= 0)
 			hit_0++;
 		
-		//printk("       hit0: %i, hit1: %i, hit2: %i       ", hit_0, hit_1, hit_2);
+		printk("       hit0: %i, hit1: %i, hit2: %i       ", hit_0, hit_1, hit_2);
 	}
 out:
 	mutex_unlock(&encl->lock);
