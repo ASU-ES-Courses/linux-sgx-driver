@@ -329,50 +329,13 @@ static void sgx_isolate_pages(struct sgx_encl *encl,
 					 struct sgx_epc_page,
 					 list);
 		
-		LRU_list_before = entry->encl_page->LRU_2;
-		
-		//Returns 1 if the page has been recently accessed and 0 if not
 		if (!sgx_test_and_clear_young(entry->encl_page, encl) &&
 		    !(entry->encl_page->flags & SGX_ENCL_PAGE_RESERVED)) {
-			LRU_list_after = LRU_list_before - 1;
-			
-			if(LRU_list_after <= 0) {
-				entry->encl_page->LRU_2 = 0;
-				entry->encl_page->flags |= SGX_ENCL_PAGE_RESERVED;
-				list_move_tail(&entry->list, dst);
-				entry->encl_page->chosen_to_be_evicted = 1;
-			} else {
-				entry->encl_page->LRU_2 = LRU_list_after;
-				list_move_tail(&entry->list, &encl->load_list);
-				entry->encl_page->chosen_to_be_evicted = 0;
-			}
-			
-			evicted++;
-			printk("       Evicting! Before: %i, After: %i .... evicted: %i, loaded: %i       ", LRU_list_before, LRU_list_after, evicted, loaded);
-			
+			entry->encl_page->flags |= SGX_ENCL_PAGE_RESERVED;
+			list_move_tail(&entry->list, dst);
 		} else {
-			LRU_list_after = LRU_list_before + 1;
-			
-			if (LRU_list_after >= 2) {
-				entry->encl_page->LRU_2 = 2;
-			} else {
-				entry->encl_page->LRU_2 = LRU_list_after;	
-			}
 			list_move_tail(&entry->list, &encl->load_list);
-			entry->encl_page->chosen_to_be_evicted = 0;
-			
-			loaded++;
-			printk("       Evicting! Before: %i, After: %i .... evicted: %i, loaded: %i       ", LRU_list_before, LRU_list_after, evicted, loaded);
 		}
-		
-		if (LRU_list_after >= 2)
-			hit_2++;
-		else if (LRU_list_after == 1)
-			hit_1++;
-		else if (LRU_list_after <= 0)
-			hit_0++;
-		
-		printk("       hit0: %i, hit1: %i, hit2: %i       ", hit_0, hit_1, hit_2);
 	}
 out:
 	mutex_unlock(&encl->lock);
