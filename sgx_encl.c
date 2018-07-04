@@ -533,7 +533,7 @@ static int sgx_init_page(struct sgx_encl *encl, struct sgx_encl_page *entry,
 	entry->addr = addr;
 	
 	// ** LRU_2 CHANGE ** //
-	//entry->LRU_2 = 1;
+	entry->LRU_2 = 0;
 
 	return 0;
 }
