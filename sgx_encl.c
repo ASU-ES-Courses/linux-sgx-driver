@@ -1030,7 +1030,6 @@ void sgx_encl_release(struct kref *ref)
 	//**** CHANGES MADE HERE ***//
 	print_function(__func__);
 	print_encl_stats(encl);
-	clear_print_once();
 	sgx_enclave_number--; 
 		
 	mutex_lock(&sgx_tgid_ctx_mutex);
