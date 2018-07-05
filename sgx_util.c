@@ -431,6 +431,11 @@ void print_function(char *function_name) {
 		pr_info("%s:\n", function_name);
 }
 
+// ** CHANGES MADE HERE ** //
+void clear_print_once(void) {
+	print_once = 0;
+}
+
 //*****************CHANGES MADE HERE ********************//
 void print_encl_stats(struct sgx_encl *encl) {
 
