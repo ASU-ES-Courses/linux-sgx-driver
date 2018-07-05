@@ -283,6 +283,5 @@ void sgx_etrack(struct sgx_encl *encl);
 //************ CHANGES MADE HERE ******************//
 void print_encl_stats(struct sgx_encl *encl);
 void print_function(char *function_name);
-void clear_print_once(void);
 
 #endif /* __ARCH_X86_INTEL_SGX_H__ */
